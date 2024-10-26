@@ -8,5 +8,6 @@ import { ExchangeService } from './exchange.service';
   controllers: [ExchangeController],
   providers: [ExchangeService],
   imports: [CacheModule, HttpModule],
+  exports: [ExchangeService],
 })
 export class ExchangeModule {}

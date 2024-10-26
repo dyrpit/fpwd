@@ -68,7 +68,7 @@ export class ExchangeService {
       exchange,
     );
 
-    this.logger.log(`exchangeRatesCache: ${exchangeRatesCache}`);
+    this.logger.debug(`exchangeRatesCache: ${exchangeRatesCache}`);
 
     if (exchangeRatesCache) {
       return exchangeRatesCache;
