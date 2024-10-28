@@ -34,14 +34,14 @@ export class ExchangeService {
     exchange: ExchangeCurrency,
     exchangeValue: number,
   ) {
-    const exchangeRate = await this.getExchangeRates(base, exchange);
+    const { rate } = await this.getExchangeRates(base, exchange);
 
-    const resultCurrencyAmount = exchangeValue * exchangeRate;
+    const resultCurrencyAmount = exchangeValue * rate;
 
     const transaction = {
       baseAmount: exchangeValue,
       exchangedAmount: resultCurrencyAmount,
-      rate: exchangeRate,
+      rate,
       timestamp: new Date(),
     };
 
@@ -71,7 +71,7 @@ export class ExchangeService {
     this.logger.debug(`exchangeRatesCache: ${exchangeRatesCache}`);
 
     if (exchangeRatesCache) {
-      return exchangeRatesCache;
+      return { rate: exchangeRatesCache };
     }
 
     const currentExchangeRate = await this.getCurrentExchangeRate();
@@ -81,7 +81,7 @@ export class ExchangeService {
       exchange,
     );
 
-    return currentExchangeRate;
+    return { rate: currentExchangeRate };
   }
 
   private async getCurrentExchangeRate(): Promise<number | null> {

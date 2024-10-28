@@ -23,7 +23,7 @@ export class ExchangeController {
     return this.exchangeService.exchangeCurrency(base, exchange, exchangeValue);
   }
 
-  @Get('/transaction')
+  @Get('transaction')
   async getTransaction() {
     return this.exchangeService.getTransaction();
   }
