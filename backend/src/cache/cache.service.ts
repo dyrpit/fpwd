@@ -34,6 +34,7 @@ export class CacheService {
   async saveTransaction(transaction: Transaction) {
     if (!(await this.transactionCache.has(`transactions`))) {
       await this.transactionCache.set(`transactions`, [transaction]);
+      return transaction;
     }
 
     const transactions = await this.transactionCache.get(`transactions`);
