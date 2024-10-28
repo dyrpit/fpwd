@@ -10,3 +10,15 @@ EXCHANGE_RATE_API_KEY=<API_KEY>
 ```bash
 $ docker-compose up -d
 ```
+
+or you can run project using npm
+
+```bash
+cd backend
+$ npm install
+$ npm run start:dev
+
+cd frontend
+$ npm install
+$ npm run dev
+```
