@@ -6,7 +6,7 @@ import { BaseCurrency, ExchangeCurrency, Transaction } from 'src/types/types';
 @Injectable()
 export class CacheService {
   private exchangeRateCache: Keyv<number | undefined>;
-  private transactionCache: Keyv<Transaction>;
+  private transactionCache: Keyv<Transaction[]>;
 
   constructor() {
     this.exchangeRateCache = new Keyv({ ttl: 60 * 1000 }); // 60 seconds
@@ -32,10 +32,18 @@ export class CacheService {
   }
 
   async saveTransaction(transaction: Transaction) {
-    return this.transactionCache.set(`transaction`, transaction);
+    if (!(await this.transactionCache.has(`transactions`))) {
+      await this.transactionCache.set(`transactions`, [transaction]);
+    }
+
+    const transactions = await this.transactionCache.get(`transactions`);
+    transactions.push(transaction);
+    await this.transactionCache.set(`transactions`, transactions);
+
+    return transaction;
   }
 
-  async getTransaction() {
-    return this.transactionCache.get(`transaction`);
+  async getTransactions() {
+    return this.transactionCache.get(`transactions`);
   }
 }

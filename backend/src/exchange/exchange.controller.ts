@@ -23,9 +23,9 @@ export class ExchangeController {
     return this.exchangeService.exchangeCurrency(base, exchange, exchangeValue);
   }
 
-  @Get('transaction')
-  async getTransaction() {
-    return this.exchangeService.getTransaction();
+  @Get('transactions')
+  async getTransactions() {
+    return this.exchangeService.getTransactions();
   }
 
   @Post('rates')

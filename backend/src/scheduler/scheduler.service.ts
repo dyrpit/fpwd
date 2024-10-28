@@ -18,7 +18,7 @@ export class SchedulerService {
         BASE_CURRENCY.EUR,
         EXCHANGE_CURRENCY.PLN,
       );
-      this.logger.debug(`Exchange rate updated: ${rate}`);
+      this.logger.debug(`Exchange rate updated: ${JSON.stringify(rate)}`);
     } catch (error) {
       this.logger.error('Failed to update exchange rate:', error);
     }

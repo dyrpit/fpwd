@@ -52,8 +52,8 @@ export class ExchangeService {
     throw new BadRequestException();
   }
 
-  async getTransaction() {
-    const transaction = await this.cacheService.getTransaction();
+  async getTransactions() {
+    const transaction = await this.cacheService.getTransactions();
 
     if (transaction) {
       return transaction;
