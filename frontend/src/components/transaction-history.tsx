@@ -1,23 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getTransactions } from '@/services/api/exchange.api';
+import Spinner from './spinner';
 
 export default function TransactionHistory() {
-  const {
-    data: transactions,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['transactions'],
     queryFn: getTransactions,
   });
-
-  if (isLoading) {
-    return <div>Loading transactions...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading transactions</div>;
-  }
 
   return (
     <div className='mt-8'>
@@ -33,13 +23,18 @@ export default function TransactionHistory() {
             </tr>
           </thead>
           <tbody>
-            {transactions &&
-              transactions.map((transaction, index) => (
-                <tr key={index} className='border-t'>
-                  <td className='px-6 py-4'>{transaction.eurAmount}</td>
-                  <td className='px-6 py-4'>{transaction.plnAmount.toFixed(2)}</td>
+            {isLoading && <Spinner />}
+            {data &&
+              data.map((transaction) => (
+                <tr key={transaction.timestamp} className='border-t'>
+                  <td className='px-6 py-4'>{transaction.baseAmount}</td>
+                  <td className='px-6 py-4'>
+                    {transaction.exchangedAmount.toFixed(2)}
+                  </td>
                   <td className='px-6 py-4'>{transaction.rate}</td>
-                  <td className='px-6 py-4'>{new Date(transaction.timestamp).toLocaleString()}</td>
+                  <td className='px-6 py-4'>
+                    {new Date(transaction.timestamp).toLocaleString()}
+                  </td>
                 </tr>
               ))}
           </tbody>
